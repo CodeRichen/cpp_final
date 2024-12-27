@@ -1,0 +1,3 @@
+Mage 1 70 50 10 5 20 None 0 0 None 0 0 None 0 0 0 
+Mage 1 70 50 10 5 20 None 0 0 None 0 0 None 0 0 0 
+Mage 1 70 50 10 5 20 None 0 0 None 0 0 None 0 0 1 Magic Stone Increase MP by 25 0 0 
