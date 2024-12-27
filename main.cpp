@@ -1,57 +1,49 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "player.h"
 #include "shop.h"
 #include "save_load.h"
-
+#include "Trap.h"
+#include "BattleSystem.h"
+#include "Item.h"
+#include "skill.h"
 using namespace std;
 
-void initializePlayer(Player& player, int roleChoice) {
-    player.role = roleChoice == 1 ? "Warrior" : "Mage";
-    player.level = 1;
-    player.hp = roleChoice == 1 ? 100 : 70;
-    player.mp = roleChoice == 1 ? 30 : 50;
-    player.attack = roleChoice == 1 ? 15 : 10;
-    player.defense = roleChoice == 1 ? 10 : 5;
-    player.coins = 20;
-    player.inventory.clear();
-    for (int i = 0; i < 3; ++i) {
-        player.equippedItems[i] = { "None", "No item equipped", 0, 0 };
-    }
-}
-
 int main() {
-    srand(time(NULL)); // 初始化随机数生成器
-    Player player;
-    vector<Item> shopItems = createShopItems();
+    srand(time(NULL)); // 初始化隨機數生成器
 
     cout << "Welcome to the RPG game!" << endl;
-    cout << "1. Load Game\n2. Create New Character\n";
-    int startOption;
-    cin >> startOption;
+    cout << "Choose your role: 1. Warrior 2. Mage 3. Archer\n";
+    int choice;
+    cin >> choice;
 
-    if (startOption == 1) {
-        loadGame(player);
-        if (player.role.empty()) {
-            cout << "No save file found. Creating a new character..." << endl;
-            cout << "Please choose a role: 1. Warrior 2. Mage\n";
-            int choice;
-            cin >> choice;
-            initializePlayer(player, choice);
-        }
+    Player player;
+
+    if (choice == 1) {
+        player.role = "Warrior";
+        player.maxHp = 100;
+        player.attack = 15;
+        player.defense = 10;
     }
-    else if (startOption == 2) {
-        cout << "Please choose a role: 1. Warrior 2. Mage\n";
-        int choice;
-        cin >> choice;
-        initializePlayer(player, choice);
+    else if (choice == 2) {
+        player.role = "Mage";
+        player.maxHp = 70;
+        player.attack = 10;
+        player.defense = 5;
     }
     else {
-        cerr << "Invalid choice! Creating a new character..." << endl;
-        cout << "Please choose a role: 1. Warrior 2. Mage\n";
-        int choice;
-        cin >> choice;
-        initializePlayer(player, choice);
+        player.role = "Archer";
+        player.maxHp = 80;
+        player.attack = 12;
+        player.defense = 8;
     }
+
+    player.level = 1;
+    player.hp = player.maxHp;
+    player.maxMp = 30;
+    player.mp = player.maxMp;
+    player.coins = 20;
 
     while (true) {
         cout << "\n--- Main Menu ---" << endl;
@@ -81,6 +73,15 @@ int main() {
         case 7:
             cout << "Goodbye!" << endl;
             return 0;
+        case 8:
+            openChest(player);
+            break;
+        case 9:
+            break;
+            battle(player, enemy)
+        case 10:
+            triggerTrap(player);
+            break;
         default:
             cerr << "Invalid option! Please try again." << endl;
         }

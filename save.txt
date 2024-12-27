@@ -1,3 +1,64 @@
-Mage 1 70 50 10 5 20 None 0 0 None 0 0 None 0 0 0 
-Mage 1 70 50 10 5 20 None 0 0 None 0 0 None 0 0 0 
-Mage 1 70 50 10 5 20 None 0 0 None 0 0 None 0 0 1 Magic Stone Increase MP by 25 0 0 
+#include <iostream>
+#include <limits>
+#include <stdexcept>
+
+double divide(double numerator, double denominator) {
+  if (denominator == 0) {
+    throw std::invalid_argument("Error: Division by zero is not allowed.");
+  }
+  return numerator / denominator;
+}
+
+int main() {
+  double numerator, denominator;
+  char retry;
+
+  do {
+    try {
+      // 输入被除数
+      std::cout << "Enter numerator: ";
+      std::cin >> numerator;
+
+      // 检查输入是否有效
+      if (std::cin.fail()) {
+        throw std::invalid_argument(
+            "Invalid input. Please enter a numeric value for the numerator.");
+      }
+
+      // 输入除数
+      std::cout << "Enter denominator: ";
+      std::cin >> denominator;
+
+      // 检查输入是否有效
+      if (std::cin.fail()) {
+        throw std::invalid_argument(
+            "Invalid input. Please enter a numeric value for the denominator.");
+      }
+
+      // 执行除法
+      double result = divide(numerator, denominator);
+      std::cout << "Result: " << result << std::endl;
+
+      retry = 'n';  // 成功计算后无需重试
+    } catch (const std::invalid_argument &e) {
+      // 处理异
+      std::cerr << e.what() << std::endl;
+
+      // 清空输入缓冲区
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+      std::cout << "Would you like to retry? (y/n): ";
+      std::cin >> retry;
+
+      // 确保有效输入
+      while (retry != 'y' && retry != 'n' && retry != 'Y' && retry != 'N') {
+        std::cout << "Invalid choice. Enter 'y' to retry or 'n' to exit: ";
+        std::cin >> retry;
+      }
+    }
+  } while (retry == 'y' || retry == 'Y');
+
+  std::cout << "Program ended." << std::endl;
+  return 0;
+}

@@ -1,9 +1,10 @@
 #ifndef BATTLESYSTEM_H
 #define BATTLESYSTEM_H
 
+#include "Player.h"
 #include "Enemy.h"
-#include "Player.h" 
 
-void battle(Player &player);
+// 戰鬥系統函式
+void battle(Player& player);
 
-#endif // BATTLESYSTEM_H
+#endif
